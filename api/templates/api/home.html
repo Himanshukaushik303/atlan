@@ -1,0 +1,29 @@
+{% extends "api/base.html" %} {% block content %}
+<div class="container">
+  <!-- Define three clickable div boxes -->
+  <a href="{% url 'responseForm' %}">
+    <div class="box">
+      <h3>Add a new Response to database.</h3>
+    </div>
+  </a>
+
+  <a href="{% url 'slangForm' %}">
+    <div class="box">
+      <h3>Get the Slang in Local Language.</h3>
+    </div>
+  </a>
+
+  <a href="{% url 'smsForm' %}">
+    <div class="box">
+      <h3>Send SMS to a User.</h3>
+    </div>
+  </a>
+
+  <a href="{% url 'sheetUrl' %}">
+    <div class="box">
+      <h3>Get all the data in Google Sheet.</h3>
+    </div>
+  </a>
+</div>
+
+{% endblock content %}

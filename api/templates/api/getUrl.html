@@ -1,0 +1,86 @@
+{% extends "api/base.html" %} {% block content %} {% load static %}
+<style type="text/css">
+    body {
+        color: #000;
+        overflow-x: hidden;
+        height: 100%;
+    }
+
+    .card {
+        padding: 30px;
+        margin-top: 60px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        border: none !important;
+        box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        width: 50vw;
+    }
+
+    .form-control-label {
+        margin-bottom: 0;
+    }
+
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.3);
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 2s linear infinite;
+        margin: 20px auto;
+    }
+
+    /* Animation for the spinner */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    #linkButton {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(to bottom, #007BFF, #00A0DF);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    #linkButton:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    #linkButton a {
+        color: white;
+    }
+
+    #linkButton:hover {
+        box-shadow: 0 2px 16px rgb(255, 255, 255);
+        /* Adjust values for desired shadow appearance */
+        transform: translate(0,
+                -2px);
+        background: linear-gradient(to bottom, #00A0DF, #007BFF);
+    }
+</style>
+<div>
+    <div class="card">
+        <h5 class="text-center mb-4">Here is your Google Sheet Link</h5>
+        <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+        <button type="button" class="btn btn-primary btn-lg" id="linkButton" disabled>Loading...</button>
+    </div>
+</div>
+
+<script src="{% static 'getUrl.js'%}"></script>
+</div>
+
+{% endblock content %}
