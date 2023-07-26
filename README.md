@@ -128,8 +128,8 @@ Send an SMS to user,
 ### Usage
 1. I have used Twillio library to send the SMS. We can use any of the SMS service, twillio is reliable.
 2. I have exposed this api to show the working and taken input of test message.
-3. But we can add this method inside the thread which executes after adding the response successfully in the database.
-3. We can then send the SMS with the information from the response object.
+3. But we also add this method inside the thread which executes after adding the response successfully in the database.
+3. We can then send the SMS with the information from the response object like first name and mobile number.
 <img src="https://github.com/Himanshukaushik303/atlan/blob/master/api/static/sms.jpg" width="40%" height="10%">
 
 
