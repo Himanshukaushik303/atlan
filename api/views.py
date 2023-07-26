@@ -142,8 +142,7 @@ def addResponse(request):
                 monthly_Income=data["income"],
             )
             logging.info("Successfully added response: {}".format(response.id))
-            response_data = list(model_to_dict(response).values())
-            thread = threading.Thread(target=addResponseToSheets, args=(response_data,))
+            thread = threading.Thread(target=addResponseToSheets, args=(response,))
             thread.start()
             return Response(data="Successfully Added Response")
         return Response(data="Response is Invalid.", status=400)
@@ -155,14 +154,16 @@ def addResponse(request):
         return Response(error_message, status=500)
 
 
-def addResponseToSheets(request):
+def addResponseToSheets(request, ):
+    sendConfirmation(request)
+    logging.info(f"Received request data to add to sheets.")
+    response_data = list(model_to_dict(request).values())
     unsynced_ids = get_unsynced_ids_from_backlog()
     unsynced_responses = [
         list(model_to_dict(response).values())
         for response in Responses.objects.filter(id__in=unsynced_ids)
     ]
-    unsynced_responses.append(request)
-    logging.info(f"Received request data for add to sheets : {unsynced_responses}")
+    unsynced_responses.append(response_data)
     try:
         sheet_id = os.environ.get("SHEET_ID")
         if not sheet_id:
@@ -269,3 +270,16 @@ def get_unsynced_ids_from_backlog():
     except Exception as e:
         logging.error(f"Error while retrieving unsynced IDs from the backlog: {e}")
     return unsynced_ids
+
+def sendConfirmation(request):
+    try:
+        client = getTwiilioClient()
+        message = client.messages.create(
+            body=f"Hi {request.first_Name}, Thank you for Participating in the survey.",
+            from_="+14326662078",
+            to=f"{request.mobile_No}",
+        )
+        logging.info("Successfully sent message: {}".format(message.sid))
+        return Response("Successfully sent message to the user.")
+    except Exception as e:
+        logging.error("An error occurred while sending the SMS: {}".format(str(e)))
